@@ -50,7 +50,7 @@ class TelegramComponentsController extends Controller
     }
 
     /**
-     * Save last user request in file
+     * Save last user request in file 
      * @param $request
      */
     public function saveRecentMessage($request)
