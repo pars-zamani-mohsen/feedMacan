@@ -18,27 +18,18 @@
 <body>
 
 <div class="container-fluid p-5 bg-primary text-white text-center">
-    <h1>My First Bootstrap Page</h1>
-    <p>Resize this responsive page to see the effect!</p>
+    <h1>گزارش کانال دکتر ماکان آریا پارسا </h1>
+    <p>ایجاد شده توسط تیم توسعه هولدینگ پارس پندار نهاد</p>
 </div>
 
 <div class="container mt-5">
     <div class="row">
-        <div class="col-sm-4">
-            <h3>Column 1</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+        @foreach ($data as $item)
+        <div class="col-12 col-lg-6">
+            <h3>{{ $item['id'] }}</h3>
+            <p>{{ $item['text'] }}</p>
         </div>
-        <div class="col-sm-4">
-            <h3>Column 2</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
-        </div>
-        <div class="col-sm-4">
-            <h3>Column 3</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
-        </div>
+        @endforeach
     </div>
 </div>
 

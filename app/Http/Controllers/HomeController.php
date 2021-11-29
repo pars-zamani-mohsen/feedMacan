@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Telegram;
 use Illuminate\Support\Facades\Artisan;
 
 class HomeController extends Controller
@@ -20,7 +21,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('home', array(
+            'data' => Telegram::orderBy('id', 'DESC')->get()
+        ));
     }
 
     /**

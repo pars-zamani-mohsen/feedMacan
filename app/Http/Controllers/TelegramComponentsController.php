@@ -29,20 +29,12 @@ class TelegramComponentsController extends Controller
     /**
      * Save chat information in database
      *
-     * @param string $user_id
-     * @param string|null $username
-     * @param string|null $first_name
-     * @param string|null $last_name
      * @param string|null $text
      * @return \App\Telegram
      */
-    public function saveChatToDatabase(string $user_id, string $username = null, string $first_name = null, string $last_name = null, string $text = null)
+    public function saveChatToDatabase(string $text = null)
     {
         $instance = new \App\Telegram();
-        $instance->user_id = $user_id;
-        $instance->username = $username;
-        $instance->first_name = $first_name;
-        $instance->last_name = $last_name;
         $instance->text = $text;
         $instance->file = null;
         $instance->save();
@@ -50,7 +42,7 @@ class TelegramComponentsController extends Controller
     }
 
     /**
-     * Save last user request in file 
+     * Save last user request in file
      * @param $request
      */
     public function saveRecentMessage($request)

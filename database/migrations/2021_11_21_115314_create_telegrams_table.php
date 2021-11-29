@@ -15,11 +15,7 @@ class CreateTelegramsTable extends Migration
     {
         Schema::create('telegrams', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('user_id');
-            $table->string('username')->nullable();
-            $table->string('first_name')->nullable();
-            $table->string('last_name')->nullable();
-            $table->string('text')->nullable();
+            $table->text('text')->nullable();
             $table->string('file')->nullable();
             $table->integer('created_at')->nullable();
             $table->integer('updated_at')->nullable();
