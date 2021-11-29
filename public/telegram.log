@@ -1,0 +1,15 @@
+GET /_telegram HTTP/1.1
+Accept:                    text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Encoding:           gzip, deflate
+Accept-Language:           en-US,en;q=0.5
+Connection:                keep-alive
+Cookie:                    _gcl_au=1.1.1668687065.1636868935; _ga=GA1.1.140962893.1636868935; analytics_campaign={%22source%22:%22direct%22%2C%22medium%22:null}; analytics_token=7231c859-ee9f-7510-4168-568409b95ac2; _yngt=2dd54791-9d8d-4f68-95c5-d053d95a25b0; _hjid=2fb4b0b4-61f9-481a-88a9-3fef7409ff59; crisp-client%2Fsession%2F11e34910-dec3-4835-a1d0-bb0197ea964b=session_7775b3db-d6cb-485e-b1c8-aa55393cb693; XSRF-TOKEN=eyJpdiI6Ik15d3NoZUg2NFpPdmRIXC9EY093ZU9BPT0iLCJ2YWx1ZSI6InZCUjRKK2xCSW1Eb1Budk80S29lY2hKMjdIYWNERXlnUVNxVEl3UHN1VjlHWnpOc2llZkd2bkhLK1JyVVU3S1NRNVdIVnNTdTJcLzhCUmE5WURsQnV6QW1SS1pnWDVrV0hwQzhDd09hWGluWFhLcUdPRXVvNFhiTjM5dlwvTGVzWmEiLCJtYWMiOiI5NDUyNTcyNmYyYWQ0Mzc3YmQ4NDgyODc3MzI1ODM5MjMzMGJkMjViM2E3MGVkMGNiOTJlMzhhODUxZjkwODJkIn0%3D; samanh_pshtibani_pars_session=eyJpdiI6InozbGQzamJYdWtEYUgrWGxsQXNzMGc9PSIsInZhbHVlIjoiVURCa3hiM2UyVnRzRXlRTTFHNVRcLzlla2p1UE02UzE1b25ZdHR4WHc1Y2Z4VlNYaWNYZTdyeXcrdWljNGtxMlwvek96Nk1HVDdoRHhwa0hZTzg4XC9kUVwvWk5GNVwvMEh3WjRKRG1GNDBNWklJUFJCTnhLemdXbmVRR010QmgweU1JUCIsIm1hYyI6IjcyNTkyZjI2MGRlNGE2OWQ4ZDUxODJlMmM5ZTY5NDQ3ZTI5ZDcyNDI5MzY0ZjY5N2JiYzMxZGFjZjJkODNlZTYifQ%3D%3D
+Host:                      127.0.0.1:8000
+Sec-Fetch-Dest:            document
+Sec-Fetch-Mode:            navigate
+Sec-Fetch-Site:            none
+Sec-Fetch-User:            ?1
+Upgrade-Insecure-Requests: 1
+User-Agent:                Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:94.0) Gecko/20100101 Firefox/94.0
+Cookie: _gcl_au=; _ga=; analytics_campaign=; analytics_token=; _yngt=; _hjid=; crisp-client/session/11e34910-dec3-4835-a1d0-bb0197ea964b=; XSRF-TOKEN=li9Byr74QuJbh3wQdNHAB0MqgAT1KZjbyQ7AcHOq; samanh_pshtibani_pars_session=QlQYIYDRTHz70leBWGwfqtEIrZQ94WAkyuuN3I5o
+
