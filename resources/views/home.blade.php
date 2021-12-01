@@ -27,9 +27,40 @@
         @foreach ($data as $item)
         <div class="col-12 col-lg-6">
             <h3>{{ $item['id'] }}</h3>
-            <p>{{ $item['text'] }}</p>
+            <p class="w-100 text-center">
+                @if (isset($item['file']) && $item['file'])
+                    @if (isset($item['file_type']) && ($item['file_type'] == 'photo' || strpos($item['file_type'], 'photo') !== false))
+                        <figure>
+                            <a href="{{ asset($item['file']) }}" target="_blank"><img class="w-100" src="{{ asset($item['file']) }}" alt="macan feedback image"></a>
+                        </figure>
+                    @elseif (isset($item['file_type']) && ($item['file_type'] == 'video' || strpos($item['file_type'], 'video') !== false))
+                        <video class="w-100" controls>
+                            <source src="{{ asset($item['file']) }}" type="video/mp4">
+                            <source src="{{ asset($item['file']) }}" type="video/ogg">
+                            <source src="{{ asset($item['file']) }}" type="video/mpeg">
+                            <source src="{{ asset($item['file']) }}" type="video/webm">
+                            Your browser does not support the video tag.
+                        </video>
+
+                    @elseif (isset($item['file_type']) && ($item['file_type'] == 'audio' || strpos($item['file_type'], 'audio') !== false))
+                        <audio class="w-100" controls>
+                            <source src="{{ asset($item['file']) }}" type="audio/ogg">
+                            <source src="{{ asset($item['file']) }}" type="audio/mpeg">
+                            <source src="{{ asset($item['file']) }}" type="audio/mp4">
+                            Your browser does not support the audio tag.
+                        </audio>
+                    @else
+                        <a href="{{ asset($item['file']) }}" target="_blank">دریافت فایل</a>
+                    @endif
+                @endif
+            </p>
+
+            <p class="text-justify">{!! $item['text'] !!}</p>
         </div>
         @endforeach
+        <div class="my-paginate col-12 text-center @if(count($data->render()->elements[0]) > 1) p-3 @endif">
+            {{ $data->render() }}
+        </div>
     </div>
 </div>
 

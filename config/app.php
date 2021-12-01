@@ -36,7 +36,7 @@ return [
     |
     */
 
-//	'host_public_path' => '/home/parssupport/domains/parssupport.com/public_html',
+//	'host_public_path' => '/home/feedma/domains/feed.macan.ir/public_html/',
     'host_public_path' => public_path(),
 
     /*

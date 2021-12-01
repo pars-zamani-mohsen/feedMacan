@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Telegram\Bot\Api;
 use Illuminate\Http\Request;
 use App\AdditionalClasses\Date;
+use Illuminate\Support\Facades\Storage;
 use App\AdditionalClasses\CustomValidator;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use Facade\Ignition\Support\Packagist\Package;
@@ -30,15 +31,24 @@ class TelegramComponentsController extends Controller
      * Save chat information in database
      *
      * @param string|null $text
+     * @param string|null $file
+     * @param string|null $file_type
      * @return \App\Telegram
      */
-    public function saveChatToDatabase(string $text = null)
+    public function saveChatToDatabase(string $text = null, string $file = null, string $file_type = null)
     {
-        $instance = new \App\Telegram();
-        $instance->text = $text;
-        $instance->file = null;
-        $instance->save();
-        return $instance;
+        try {
+            $instance = new \App\Telegram();
+            $instance->text = $text;
+            $instance->file = $file;
+            $instance->file_type = $file_type;
+            $instance->save();
+
+        } catch (\Exception $e) {
+            $this->saveLog('Error-saveChatToDatabase: ' . $e->getMessage());
+        }
+
+        return $instance ?? null;
     }
 
     /**
@@ -108,22 +118,28 @@ class TelegramComponentsController extends Controller
      * Initialization keyboard
      *
      * @param array $keyboard
-     * @param string $keyboard_type 'inline_keyboard'|'keyboard'
+     * @param string $keyboard_type
      * @param bool $resize_keyboard
      * @param bool $one_time_keyboard
-     * @return array|null
+     * @return array|array[]|null
      */
     public function init_keyboard(array $keyboard, string $keyboard_type = 'inline_keyboard', bool $resize_keyboard = false, bool $one_time_keyboard = false)
     {
-        if (!$keyboard) return $keyboard;
+        try {
+            if (!$keyboard) return $keyboard;
 
-        $keyboard = [
-            $keyboard_type => [$keyboard],
-            'resize_keyboard' => $resize_keyboard,
-            'one_time_keyboard' => $one_time_keyboard,
-        ];
-        $encodedKeyboard = json_encode($keyboard);
-        return array('reply_markup' => $encodedKeyboard);
+            $keyboard = [
+                $keyboard_type => [$keyboard],
+                'resize_keyboard' => $resize_keyboard,
+                'one_time_keyboard' => $one_time_keyboard,
+            ];
+            $encodedKeyboard = json_encode($keyboard);
+
+        } catch (\Exception $e) {
+            $this->saveLog('Error-init_keyboard: ' . $e->getMessage());
+        }
+
+        return array('reply_markup' => $encodedKeyboard ?? array());
     }
 
     /**
@@ -141,6 +157,45 @@ class TelegramComponentsController extends Controller
             $this->saveLog('Error-getMe: ' . $e->getMessage());
             return $e->getMessage();
         }
+    }
+
+    /**
+     * get file path in telegram bot
+     *
+     * @param string $file_id
+     * @return mixed
+     */
+    public function getFilePath(string $file_id)
+    {
+        try {
+            $result = $this->telegram->getFile(['file_id' => $file_id]);
+            $filepath = $this->downloadFile($result['file_path']);
+
+        } catch (\Exception $e) {
+            $this->saveLog('Error-getFilePath: ' . $e->getMessage());
+        }
+
+        return $filepath ?? null;
+    }
+
+    /**
+     * download file by file name in bot
+     * @param string $filename
+     * @return false|string|string[]|null
+     */
+    public function downloadFile(string $filename)
+    {
+        try {
+            $url = "https://api.telegram.org/file/bot403759168:AAFgipfeCt7PEBmZB4h13aYoqvjM4UsUqFI/$filename";
+            $_filename = explode('/', $filename);
+            $_filename = '/files/' . time() . '_' . $_filename[1];
+            Storage::disk('local')->put($_filename, file_get_contents($url));
+
+        } catch (\Exception $e) {
+            $this->saveLog('Error-downloadFile: ' . $e->getMessage());
+        }
+
+        return $_filename ?? null;
     }
 }
 

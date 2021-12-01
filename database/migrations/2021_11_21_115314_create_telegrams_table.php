@@ -17,6 +17,7 @@ class CreateTelegramsTable extends Migration
             $table->bigIncrements('id');
             $table->text('text')->nullable();
             $table->string('file')->nullable();
+            $table->string('file_type', 50)->nullable();
             $table->integer('created_at')->nullable();
             $table->integer('updated_at')->nullable();
         });

@@ -22,7 +22,7 @@ class HomeController extends Controller
     public function index()
     {
         return view('home', array(
-            'data' => Telegram::orderBy('id', 'DESC')->get()
+            'data' => Telegram::orderBy('id', 'DESC')->paginate(25)
         ));
     }
 

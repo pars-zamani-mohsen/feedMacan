@@ -2,12 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Telegram\Bot\Api;
 use Illuminate\Http\Request;
-use App\AdditionalClasses\Date;
-use App\AdditionalClasses\CustomValidator;
-use Telegram\Bot\Laravel\Facades\Telegram;
-use Facade\Ignition\Support\Packagist\Package;
 
 class TelegramController extends TelegramComponentsController
 {
@@ -42,18 +37,42 @@ class TelegramController extends TelegramComponentsController
             // initialize variable
             $this->chat_id = $request['channel_post']['chat']['id'];
             $this->username = $request['channel_post']['chat']['username'];
-            $this->text = $request['channel_post']['text'];
 
-            if ($this->chat_id == '-1001554475157') $this->saveChatToDatabase($this->text);
+            if (isset($request['channel_post']['photo'])) {
+                $this->text = (isset($request['channel_post']['caption']) && $request['channel_post']['caption']) ? $request['channel_post']['caption'] : 'تصویر';
+                $fileid = $request['channel_post']['photo'][0]['file_id'];
+                $file_type = 'photo';
 
-//            /* send message to user */
-//            $message = "سلام ، خوش آمدید🌹";
-//            $keyboard = array(
-//                ['text' => 'تیکت های من', 'callback_data' => 'ticket_list'],
-//                ['text' => 'تیکت جدید', 'callback_data' => 'ticket_new'],
-//            );
-//            $keyboard = $this->init_keyboard($keyboard);
-//            $this->sendMessage($message, $this->chat_id, $keyboard, true);
+            } elseif (isset($request['channel_post']['video'])) {
+                $this->text = (isset($request['channel_post']['caption']) && $request['channel_post']['caption']) ? $request['channel_post']['caption'] : 'ویدئو';
+                $fileid = $request['channel_post']['video']['file_id'];
+                $file_type = 'video';
+
+            } elseif (isset($request['channel_post']['voice'])) {
+                $this->text = (isset($request['channel_post']['caption']) && $request['channel_post']['caption']) ? $request['channel_post']['caption'] : 'صدا';
+                $fileid = $request['channel_post']['voice']['file_id'];
+                $file_type = 'audio';
+
+            } elseif (isset($request['channel_post']['audio'])) {
+                $this->text = (isset($request['channel_post']['caption']) && $request['channel_post']['caption']) ? $request['channel_post']['caption'] : 'صدا';
+                $fileid = $request['channel_post']['audio']['file_id'];
+                $file_type = 'audio';
+
+            } elseif (isset($request['channel_post']['document'])) {
+                $this->text = (isset($request['channel_post']['caption']) && $request['channel_post']['caption']) ? $request['channel_post']['caption'] : 'فایل';
+                $fileid = $request['channel_post']['document']['file_id'];
+                $file_type = $request['channel_post']['document']['mime_type'];
+
+            } else {
+                $this->text = $request['channel_post']['text'];
+            }
+
+//            $fileid = "AgACAgQAAx0CXKdolQADL2GnORBhpK-EpzzMwrqDXH-hNa_1AALMuDEbd7UwUbDy_cDsE_dWAQADAgADcwADIgQ";
+            if (isset($fileid) && $fileid) {
+                $filename = $this->getFilePath($fileid);
+            }
+
+            if ($this->chat_id == '-1001554475157' && $this->text) $this->saveChatToDatabase($this->text, $filename ?? null, $file_type ?? null);
 
         } catch (\Exception $e) {
             $this->saveLog('Error-handleMessages: ' . $e->getMessage());
