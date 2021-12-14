@@ -25,7 +25,7 @@
 <div class="container mt-5">
     <div class="row">
         @foreach ($data as $item)
-        <div class="col-12 col-lg-6">
+        <div class="col-12">
             <h3>{{ $item['id'] }}</h3>
             <p class="w-100 text-center">
                 @if (isset($item['file']) && $item['file'])

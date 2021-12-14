@@ -40,7 +40,14 @@ class TelegramController extends TelegramComponentsController
 
             if (isset($request['channel_post']['photo'])) {
                 $this->text = (isset($request['channel_post']['caption']) && $request['channel_post']['caption']) ? $request['channel_post']['caption'] : 'تصویر';
+                $filesize = $request['channel_post']['photo'][0]['file_size'];
                 $fileid = $request['channel_post']['photo'][0]['file_id'];
+                foreach ($request['channel_post']['photo'] as $key => $item) {
+                    if ($item['file_size'] > $filesize) {
+                        $filesize = $item['file_size'];
+                        $fileid = $item['file_id'];
+                    }
+                }
                 $file_type = 'photo';
 
             } elseif (isset($request['channel_post']['video'])) {
